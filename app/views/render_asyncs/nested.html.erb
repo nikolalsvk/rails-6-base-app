@@ -1,0 +1,9 @@
+<div id="nested">
+  <p>I'm nested and I should render :wave:</p>
+
+  <%= render_async wave_render_async_path do %>
+    ...Loading <%= wave_render_async_path %>
+  <% end %>
+
+  <%= content_for :render_async %>
+</div>

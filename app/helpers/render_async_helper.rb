@@ -1,0 +1,2 @@
+module RenderAsyncHelper
+end

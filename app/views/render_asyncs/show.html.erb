@@ -1,0 +1,11 @@
+<script src="https://pagecdn.io/lib/jquery/3.2.1/jquery.min.js"></script>
+
+<section>
+  <h3>Nested partial:</h3>
+
+  <% RenderAsync.configuration.jquery = true %>
+
+  <%= render_async nested_render_async_path do %>
+    ...Loading <%= nested_render_async_path %>
+  <% end %>
+</section>
