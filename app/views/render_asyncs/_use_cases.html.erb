@@ -1,0 +1,152 @@
+<h2>jQuery:
+  <p id='jquery-paragraph'><p>
+
+  <script>
+    var jQueryParagraph = document.getElementById('jquery-paragraph')
+
+    jQueryParagraph.innerHTML = window.jQuery
+  </script>
+</h2>
+
+<hr></hr>
+
+<section>
+  <h3>Simple request that waves:</h3>
+  <%= render_async wave_render_async_path,
+                   container_id: 'ay',
+                   container_class: 'ayay',
+                   error_message: "NOOOO" do %>
+    ...Loading <%= wave_render_async_path %>
+  <% end %>
+</section>
+
+<hr></hr>
+<section>
+  <h3>Bump:</h3>
+  <%= render_async bump_render_async_path,
+                   method: 'POST',
+                   data: { fresh: 'AF' },
+                   headers: { 'Content-Type': 'text/html' } do %>
+    ...Loading <%= bump_render_async_path %>
+  <% end %>
+</section>
+
+<hr></hr>
+<section>
+  <h3>Event dispatching:</h3>
+
+  <script>
+    document.addEventListener('ay', function() {
+      var p = document.getElementById('event-paragraph');
+      p.innerHTML = 'Event dispatched!';
+    });
+  </script>
+
+  <%= render_async wave_render_async_path, event_name: 'ay' do %>
+    ...Loading <%= wave_render_async_path %>
+  <% end %>
+  <p id="event-paragraph"></p>
+</section>
+
+<hr></hr>
+<section>
+  <h3>Error message:</h3>
+
+  <script>
+    document.addEventListener('error-event', function() {
+      var p = document.getElementById('error-event-paragraph');
+      p.innerHTML = 'Error event dispatched!';
+    });
+  </script>
+
+  <%= render_async error_render_async_path,
+                   error_message: '<p>Sorry for the error :(</p>',
+                   error_event_name: 'error-event' do %>
+    ...Loading <%= error_render_async_path %>
+  <% end %>
+  <p id="error-event-paragraph"></p>
+</section>
+
+<hr></hr>
+<section>
+  <h3>Nested partial:</h3>
+
+  <%= render_async nested_render_async_path do %>
+    <script>console.log('Started loading')</script>
+    ...Loading <%= nested_render_async_path %>
+  <% end %>
+</section>
+
+<hr></hr>
+<section>
+  <div id="interval-feature">
+    <h3>Bumping on 2000ms interval:</h3>
+    <%= render_async bump_render_async_path,
+      method: 'POST',
+      data: { fresh: 'AF' },
+      headers: { 'Content-Type': 'text/html' } %>
+  </div>
+</section>
+
+<hr></hr>
+<section>
+  <div id="toggle-feature">
+    <h3>Bump:</h3>
+    <%= render_async bump_render_async_path,
+      method: 'POST',
+      data: { fresh: 'AF' },
+      headers: { 'Content-Type': 'text/html' },
+      interval: 2000,
+      toggle: { selector: '#toggle-poll' } do %>
+      ...Click to load <%= bump_render_async_path %> path
+    <% end %>
+
+    <button id='toggle-poll'>Toggle poll</button>
+  </div>
+</section>
+
+<hr></hr>
+<section>
+  <div id="toggle-feature-with-link">
+    <h3>Toggle wave:</h3>
+    <%= render_async wave_render_async_path,
+      toggle: { selector: '#load-wave' } do %>
+      <a href='#' id='load-wave'>Load a wave</a>
+    <% end %>
+  </div>
+</section>
+
+<hr></hr>
+
+<section>
+  <div id="check-default-event-dispatching">
+    <h3>Default event dispatching:</h3>
+
+    <p id="render-async-ok">
+      If it loads successfully, this should change.
+    </p>
+
+    <p id="render-async-fail">
+      If it loads badly, this should change.
+    </p>
+
+    <%= render_async wave_render_async_path %>
+    <%= render_async error_render_async_path %>
+
+    <script>
+      document.addEventListener('render_async_load', function(event) {
+        var p = document.getElementById('render-async-ok');
+        p.innerHTML = 'It loaded OK!';
+      });
+      document.addEventListener('render_async_error', function(event) {
+        var p = document.getElementById('render-async-fail');
+        p.innerHTML = 'It loaded badly :(!';
+      });
+    </script>
+  </div>
+</section>
+
+
+<%= link_to "Show with Vanilla JS", show_no_jquery_render_async_path %>
+<%= link_to "Show with jQuery", render_async_path %>
+
