@@ -69,6 +69,29 @@
 
 <hr></hr>
 <section>
+  <div id="error-message-retry">
+    <h3>Error message retry:</h3>
+
+    <script>
+      document.addEventListener('error-event-retry', function(event) {
+        var p = document.getElementById('error-event-retry-paragraph');
+
+        p.innerHTML = "Request failed after " + event.retryCount + " tries!"
+      });
+    </script>
+
+    <%= render_async error_render_async_path,
+                     error_event_name: 'error-event-retry',
+                     retry_count: 2,
+                     retry_delay: 10 do %>
+      ...Loading <%= error_render_async_path %>
+    <% end %>
+    <p id="error-event-retry-paragraph"></p>
+  </div>
+</section>
+
+<hr></hr>
+<section>
   <h3>Nested partial:</h3>
 
   <%= render_async nested_render_async_path do %>
@@ -117,7 +140,41 @@
 </section>
 
 <hr></hr>
+<section>
+  <div id="toggle-feature-with-event-trigger">
+    <h3>Controllable interval:</h3>
 
+    <%= render_async wave_render_async_path,
+                     container_id: 'controllable-interval',
+                     interval: 3000 %>
+
+    <button id='stop-polling'>Stop polling</button>
+    <button id='start-polling'>Start polling</button>
+
+    <script>
+      var container = document.getElementById('controllable-interval')
+      var stopPolling = document.getElementById('stop-polling')
+      var startPolling = document.getElementById('start-polling')
+
+      var triggerEventOnContainer = function(eventName) {
+        var event = new Event(eventName);
+
+        container.dispatchEvent(event)
+      }
+
+      stopPolling.addEventListener('click', function() {
+        debugger
+        container.innerHTML = '<p>Polling stopped</p>'
+        triggerEventOnContainer('async-stop')
+      })
+      startPolling.addEventListener('click', function() {
+        triggerEventOnContainer('async-start')
+      })
+    </script>
+  </div>
+</section>
+
+<hr></hr>
 <section>
   <div id="check-default-event-dispatching">
     <h3>Default event dispatching:</h3>
@@ -160,13 +217,13 @@
 
     <script>
       var button = document.getElementById('refresh-button')
-      var container = document.getElementById('refresh-me');
+      var refreshContainer = document.getElementById('refresh-me');
 
       button.addEventListener('click', function() {
         var event = new Event('refresh');
 
         // Dispatch 'refresh' on the render_async container
-        container.dispatchEvent(event)
+        refreshContainer.dispatchEvent(event)
       })
     </script>
   </div>

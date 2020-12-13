@@ -43,11 +43,18 @@ group :development do
 end
 
 group :test do
+  # Integration testing with Cucumber
+  gem 'cucumber-rails', :require => false
+  # Does cleaning of the database in test environment
+  gem 'database_cleaner'
   # Adds support for Capybara system testing and selenium driver
   gem 'capybara', '>= 2.15'
   gem 'selenium-webdriver'
   # Easy installation and use of web drivers to run system tests with browsers
   gem 'webdrivers'
+
+  # RSpec - testing framework
+  gem 'rspec-rails'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
