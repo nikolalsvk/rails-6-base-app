@@ -111,7 +111,7 @@
     <h3>Toggle wave:</h3>
     <%= render_async wave_render_async_path,
       toggle: { selector: '#load-wave' } do %>
-      <a href='#' id='load-wave'>Load a wave</a>
+      <button id='load-wave'>Load a wave</button>
     <% end %>
   </div>
 </section>
@@ -142,6 +142,32 @@
         var p = document.getElementById('render-async-fail');
         p.innerHTML = 'It loaded badly :(!';
       });
+    </script>
+  </div>
+</section>
+
+<hr></hr>
+
+</section>
+  <div id="refresh-render-async">
+    <h3>Refreshing a partial:</h3>
+
+    <%= render_async wave_render_async_path,
+                     container_id: 'refresh-me',
+                     replace_container: false %>
+
+    <button id="refresh-button">Refresh comments</button>
+
+    <script>
+      var button = document.getElementById('refresh-button')
+      var container = document.getElementById('refresh-me');
+
+      button.addEventListener('click', function() {
+        var event = new Event('refresh');
+
+        // Dispatch 'refresh' on the render_async container
+        container.dispatchEvent(event)
+      })
     </script>
   </div>
 </section>
