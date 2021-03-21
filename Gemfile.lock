@@ -1,7 +1,7 @@
 PATH
   remote: ../../..
   specs:
-    render_async (2.1.8)
+    render_async (2.1.10)
 
 GEM
   remote: https://rubygems.org/
