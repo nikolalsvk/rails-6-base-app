@@ -67,7 +67,7 @@ end
 
 Then("I should see that the polling stopped") do
   within '#toggle-feature-with-event-trigger' do
-    expect(page).to have_text('Polling stopped')
+    expect(page).to have_text('Polling stopped', wait: 3)
   end
 end
 
