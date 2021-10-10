@@ -24,6 +24,9 @@ class RenderAsyncsController < ApplicationController
 
   # GET /render_async/error
   def error
+    # Check for the custom header we send when retrying a request.
+    puts "Check Retry-Count-Header: #{request.headers['Retry-Count-Header']}"
+
     head :not_found, layout: false
   end
 

@@ -82,6 +82,7 @@
 
     <%= render_async error_render_async_path,
                      error_event_name: 'error-event-retry',
+                     retry_count_header: 'Retry-Count-Header',
                      retry_count: 2,
                      retry_delay: 10 do %>
       ...Loading <%= error_render_async_path %>
