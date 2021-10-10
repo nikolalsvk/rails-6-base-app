@@ -146,13 +146,16 @@
 
     <%= render_async wave_render_async_path,
                      container_id: 'controllable-interval',
-                     interval: 3000 %>
+                     interval: 6000 %>
+
+    <div id='interval-control-info'></div>
 
     <button id='stop-polling'>Stop polling</button>
     <button id='start-polling'>Start polling</button>
 
     <script>
       var container = document.getElementById('controllable-interval')
+      var intervalInfoContainer = document.getElementById('interval-control-info')
       var stopPolling = document.getElementById('stop-polling')
       var startPolling = document.getElementById('start-polling')
 
@@ -163,8 +166,7 @@
       }
 
       stopPolling.addEventListener('click', function() {
-        debugger
-        container.innerHTML = '<p>Polling stopped</p>'
+        intervalInfoContainer.innerHTML = '<p>Polling stopped</p>'
         triggerEventOnContainer('async-stop')
       })
       startPolling.addEventListener('click', function() {
